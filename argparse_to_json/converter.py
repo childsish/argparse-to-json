@@ -6,7 +6,9 @@ class Converter:
         properties = {}
         required = []
         for action in parser._actions[1:]:
-            properties[action.dest] = {'type': 'string'}
+            properties[action.dest] = {
+                'type': 'boolean' if action.const is True and action.default is False else 'string'
+            }
             if action.help:
                 properties[action.dest]['description'] = action.help
             if action.required:
