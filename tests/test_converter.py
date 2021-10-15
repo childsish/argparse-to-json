@@ -70,3 +70,30 @@ class TestConverter(unittest.TestCase):
             },
             'required': [],
         }, jsonform)
+
+    def test_subparsers(self):
+        parser = argparse.ArgumentParser()
+        subparsers = parser.add_subparsers()
+        subparser1 = subparsers.add_parser('subparser1')
+        subparser2 = subparsers.add_parser('subparser2')
+        jsonform = convert(parser)
+        self.assertEqual({
+            'type': 'object',
+            'properties': {
+                'positional arguments': {
+                    'type': 'string',
+                    'enum': ['subparser1', 'subparser2'],
+                },
+                'subparser1': {
+                    'type': 'object',
+                    'properties': {},
+                    'required': [],
+                },
+                'subparser2': {
+                    'type': 'object',
+                    'properties': {},
+                    'required': [],
+                },
+            },
+            'required': ['positional arguments'],
+        }, jsonform)
