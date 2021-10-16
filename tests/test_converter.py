@@ -52,6 +52,25 @@ class TestConverter(unittest.TestCase):
             },
         }, jsonform)
 
+    def test_positional_file_argument(self):
+        parser = argparse.ArgumentParser()
+        parser.add_argument('input1', type=argparse.FileType('r'))
+        jsonform = convert(parser)
+        self.assertEqual({
+            'schema': {
+                'input1': {
+                    'type': 'string',
+                    'required': True,
+                },
+            },
+            'form': [
+                {
+                    'key': 'input1',
+                    'type': 'file',
+                }
+            ],
+        }, jsonform)
+
     def test_optional_argument(self):
         parser = argparse.ArgumentParser()
         parser.add_argument('-i', '--input1')

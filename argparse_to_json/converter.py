@@ -36,7 +36,7 @@ class Converter:
 
     def parse_store_action(self, action: argparse.Action, schema: dict, form: list):
         data = {
-            'type': {None: 'string', str: 'string', int: 'integer'}[action.type]
+            'type': 'integer' if action.type is int else 'string'
         }
         if action.help:
             data['description'] = action.help
@@ -44,6 +44,11 @@ class Converter:
             data['required'] = action.required
         if action.choices:
             data['enum'] = action.choices
+        if isinstance(action.type, argparse.FileType):
+            form.append({
+                'key': action.dest,
+                'type': 'file',
+            })
         schema[action.dest] = data
 
     def parse_store_true_action(self, action: argparse.Action, schema: dict, form: list):
