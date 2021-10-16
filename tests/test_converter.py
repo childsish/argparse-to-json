@@ -82,7 +82,7 @@ class TestConverter(unittest.TestCase):
             },
             'form': [
                 {
-                    'type': 'selectFieldSet',
+                    'type': 'selectfieldset',
                     'title': 'Choose command',
                     'items': [
                         {

@@ -56,7 +56,7 @@ class Converter:
 
     def parse_subparsers_action(self, action: argparse.Action, schema: dict, form: list):
         form.append({
-            'type': 'selectFieldSet',
+            'type': 'selectfieldset',
             'title': 'Choose command',
             'items': [{'key': name} for name in action.choices],
         })
