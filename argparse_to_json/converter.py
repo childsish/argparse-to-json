@@ -36,7 +36,7 @@ class Converter:
 
     def parse_store_action(self, action: argparse.Action, schema: dict, form: list):
         data = {
-            'type': 'string'
+            'type': {None: 'string', str: 'string', int: 'integer'}[action.type]
         }
         if action.help:
             data['description'] = action.help

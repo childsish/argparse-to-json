@@ -25,6 +25,19 @@ class TestConverter(unittest.TestCase):
             },
         }, jsonform)
 
+    def test_positional_int_argument(self):
+        parser = argparse.ArgumentParser()
+        parser.add_argument('input1', type=int)
+        jsonform = convert(parser)
+        self.assertEqual({
+            'schema': {
+                'input1': {
+                    'type': 'integer',
+                    'required': True,
+                },
+            },
+        }, jsonform)
+
     def test_positional_argument_with_choices(self):
         parser = argparse.ArgumentParser()
         parser.add_argument('input1', choices=['foo', 'bar'])
