@@ -83,9 +83,33 @@ class TestConverter(unittest.TestCase):
             },
         }, jsonform)
 
-    def test_optional_flag(self):
+    def test_optional_store_const(self):
+        parser = argparse.ArgumentParser()
+        parser.add_argument('-i', '--input1', action='store_const', const=0)
+        jsonform = convert(parser)
+        self.assertEqual({
+            'schema': {
+                'input1': {
+                    'type': 'boolean',
+                },
+            },
+        }, jsonform)
+
+    def test_optional_store_true(self):
         parser = argparse.ArgumentParser()
         parser.add_argument('-i', '--input1', action='store_true')
+        jsonform = convert(parser)
+        self.assertEqual({
+            'schema': {
+                'input1': {
+                    'type': 'boolean',
+                },
+            },
+        }, jsonform)
+
+    def test_optional_store_false(self):
+        parser = argparse.ArgumentParser()
+        parser.add_argument('-i', '--input1', action='store_false')
         jsonform = convert(parser)
         self.assertEqual({
             'schema': {
