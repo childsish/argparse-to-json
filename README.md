@@ -1,2 +1,2 @@
 # argparse-to-json
-convert argparse parsers to json compatible with jsonforms
+Convert Python argparse parsers to json compatible with [JSON Form](https://github.com/jsonform/jsonform).
