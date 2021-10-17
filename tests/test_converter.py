@@ -119,6 +119,21 @@ class TestConverter(unittest.TestCase):
             },
         }, jsonform)
 
+    def test_optional_append(self):
+        parser = argparse.ArgumentParser()
+        parser.add_argument('-i', '--input1', action='append')
+        jsonform = convert(parser)
+        self.assertEqual({
+            'schema': {
+                'input1': {
+                    'type': 'array',
+                    'items': {
+                        'type': 'string',
+                    }
+                },
+            },
+        }, jsonform)
+
     def test_subparsers(self):
         parser = argparse.ArgumentParser()
         subparsers = parser.add_subparsers()

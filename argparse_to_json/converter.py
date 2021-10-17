@@ -34,13 +34,14 @@ class Converter:
             '_StoreConstAction': self.parse_store_const_action,
             '_StoreTrueAction': self.parse_store_const_action,
             '_StoreFalseAction': self.parse_store_const_action,
+            '_AppendAction': self.parse_append_action,
             '_SubParsersAction': self.parse_subparsers_action,
         }[action_name]
         fn(action, schema, form)
 
     def parse_store_action(self, action: argparse.Action, schema: dict, form: list):
         data = {
-            'type': 'integer' if action.type is int else 'string'
+            'type': self.get_type(action),
         }
         if action.help:
             data['description'] = action.help
@@ -63,6 +64,17 @@ class Converter:
             data['description'] = action.help
         schema[action.dest] = data
 
+    def parse_append_action(self, action: argparse.Action, schema: dict, form: list):
+        data = {
+            'type': 'array',
+            'items': {
+              'type': self.get_type(action),
+            },
+        }
+        if action.help:
+            data['description'] = action.help
+        schema[action.dest] = data
+
     def parse_subparsers_action(self, action: argparse.Action, schema: dict, form: list):
         form.append({
             'type': 'selectfieldset',
@@ -76,3 +88,6 @@ class Converter:
                 'properties': subparser_schema,
             }
             form.extend(subparser_form)
+
+    def get_type(self, action):
+        return 'integer' if action.type is int else 'string'
