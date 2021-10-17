@@ -85,7 +85,7 @@ class TestConverter(unittest.TestCase):
 
     def test_optional_store_const(self):
         parser = argparse.ArgumentParser()
-        parser.add_argument('-i', '--input1', action='store_const', const=0)
+        parser.add_argument('-i', '--input1', action='store_const', const=None)
         jsonform = convert(parser)
         self.assertEqual({
             'schema': {
@@ -129,6 +129,21 @@ class TestConverter(unittest.TestCase):
                     'type': 'array',
                     'items': {
                         'type': 'string',
+                    }
+                },
+            },
+        }, jsonform)
+
+    def test_optional_append_const(self):
+        parser = argparse.ArgumentParser()
+        parser.add_argument('-i', '--input1', action='append_const', const=None)
+        jsonform = convert(parser)
+        self.assertEqual({
+            'schema': {
+                'input1': {
+                    'type': 'array',
+                    'items': {
+                        'type': 'boolean',
                     }
                 },
             },

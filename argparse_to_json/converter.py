@@ -35,6 +35,7 @@ class Converter:
             '_StoreTrueAction': self.parse_store_const_action,
             '_StoreFalseAction': self.parse_store_const_action,
             '_AppendAction': self.parse_append_action,
+            '_AppendConstAction': self.parse_append_const_action,
             '_SubParsersAction': self.parse_subparsers_action,
         }[action_name]
         fn(action, schema, form)
@@ -68,7 +69,18 @@ class Converter:
         data = {
             'type': 'array',
             'items': {
-              'type': self.get_type(action),
+                'type': self.get_type(action),
+            },
+        }
+        if action.help:
+            data['description'] = action.help
+        schema[action.dest] = data
+
+    def parse_append_const_action(self, action: argparse.Action, schema: dict, form: list):
+        data = {
+            'type': 'array',
+            'items': {
+                'type': 'boolean',
             },
         }
         if action.help:
