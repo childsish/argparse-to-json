@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>argparse-to-json</title>
+  </head>
+  <body>
+
+  <select onchange="select_tool(this.value)">
+    <option value="" selected>Choose CLI to convert to form...</option>
+    {% for tool in tools %}
+    <option value="{{ tool }}">{{ tool }}</option>
+    {% endfor %}
+  </select>
+
+  <hr/>
+
+  <form></form>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js" integrity="sha512-ZuOjyqq409+q6uc49UiBF3fTeyRyP8Qs0Jf/7FxH5LfhqBMzrR5cwbpDA4BgzSo884w6q/+oNdIeHenOqhISGw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="{{ url_for('static', filename='jsonform.js') }}"></script>
+  <script>
+    function select_tool(value) {
+      if (value == '') {
+        return
+      }
+      fetch('tools/' + value)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        $('form').empty()
+        $('form').jsonForm(data)
+      })
+    }
+  </script>
+  </body>
+</html>
