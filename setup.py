@@ -1,4 +1,8 @@
-from setuptools import setup, find_packages
+from pathlib import Path
+from setuptools import setup
+
+this_directory = Path(__file__).parent
+long_description = (this_directory / 'README.md').read_text()
 
 setup(
     name='argparse-to-json',
@@ -7,5 +11,7 @@ setup(
     author='Liam H. Childs',
     author_email='liam.h.childs@gmail.com',
     description='Convert argparse.ArgumentParser to json compatible with JSON Form',
-    packages=find_packages(),
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    packages=['argparse_to_json'],
 )
