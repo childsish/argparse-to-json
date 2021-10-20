@@ -71,6 +71,20 @@ class TestConverter(unittest.TestCase):
             ],
         }, jsonform)
 
+    def test_positional_argument_metavar(self):
+        parser = argparse.ArgumentParser()
+        parser.add_argument('input1', metavar='Input')
+        jsonform = convert(parser)
+        self.assertEqual({
+            'schema': {
+                'input1': {
+                    'type': 'string',
+                    'required': True,
+                    'title': 'Input',
+                },
+            },
+        }, jsonform)
+
     def test_optional_argument(self):
         parser = argparse.ArgumentParser()
         parser.add_argument('-i', '--input1')

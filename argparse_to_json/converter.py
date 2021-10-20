@@ -50,6 +50,8 @@ class Converter:
             data['required'] = action.required
         if action.choices:
             data['enum'] = action.choices
+        if action.metavar:
+            data['title'] = action.metavar
         if isinstance(action.type, argparse.FileType):
             form.append({
                 'key': action.dest,
@@ -63,6 +65,8 @@ class Converter:
         }
         if action.help:
             data['description'] = action.help
+        if action.metavar:
+            data['title'] = action.metavar
         schema[action.dest] = data
 
     def parse_append_action(self, action: argparse.Action, schema: dict, form: list):
@@ -74,6 +78,8 @@ class Converter:
         }
         if action.help:
             data['description'] = action.help
+        if action.metavar:
+            data['title'] = action.metavar
         schema[action.dest] = data
 
     def parse_append_const_action(self, action: argparse.Action, schema: dict, form: list):
@@ -85,13 +91,18 @@ class Converter:
         }
         if action.help:
             data['description'] = action.help
+        if action.metavar:
+            data['title'] = action.metavar
         schema[action.dest] = data
 
     def parse_subparsers_action(self, action: argparse.Action, schema: dict, form: list):
         form.append({
             'type': 'selectfieldset',
             'title': 'Choose command',
-            'items': [{'key': name} for name in action.choices],
+            'items': [{
+                'key': name,
+                'legend': name,
+            } for name in action.choices],
         })
         for name, subparser in action.choices.items():
             subparser_schema, subparser_form = self.parse_parser(subparser)
