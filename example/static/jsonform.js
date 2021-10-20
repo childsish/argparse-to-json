@@ -220,7 +220,7 @@ jsonform.fieldTemplate = function(inner) {
     '<%= (node.disabled ? " jsonform-disabled" : "") %>' +
     '">' +
     '<% if (!elt.notitle) { %>' +
-      '<label for="<%= node.id %>"><%= node.title ? node.title : node.name %></label>' +
+      '<label for="<%= node.id %>" class="form-label"><%= node.title ? node.title : node.name %></label>' +
     '<% } %>' +
     '<div class="controls">' +
       '<% if (node.prepend || node.append) { %>' +
@@ -238,7 +238,7 @@ jsonform.fieldTemplate = function(inner) {
         '</div>' +
       '<% } %>' +
       '<% if (node.description) { %>' +
-        '<span class="help-block"><%= node.description %></span>' +
+        '<span class="help-block form-text"><%= node.description %></span>' +
       '<% } %>' +
       '<span class="help-block jsonform-errortext" style="display:none;"></span>' +
     '</div></div>';
@@ -659,7 +659,7 @@ jsonform.elementTypes = {
   },
   'select':{
     'template':'<select name="<%= node.name %>" id="<%= id %>"' +
-      'class=\'form-control<%= (fieldHtmlClass ? " " + fieldHtmlClass : "") %>\'' +
+      'class=\'form-select<%= (fieldHtmlClass ? " " + fieldHtmlClass : "") %>\'' +
       '<%= (node.schemaElement && node.schemaElement.disabled? " disabled" : "")%>' +
       '<%= (node.schemaElement && node.schemaElement.required ? " required=\'required\'" : "") %>' +
       '> ' +
@@ -1181,7 +1181,7 @@ jsonform.elementTypes = {
     }
   },
   'help': {
-    'template':'<span class="help-block" style="padding-top:5px"><%= elt.helpvalue %></span>',
+    'template':'<span class="help-block form-text" style="padding-top:5px"><%= elt.helpvalue %></span>',
     'fieldtemplate': true
   },
   'msg': {
@@ -1302,7 +1302,7 @@ jsonform.elementTypes = {
         '<a id="<%= node.id %>"></a><% } %>' +
       '<div class="tabbable">' +
         '<div class="form-group<%= node.formElement.hideMenu ? " hide" : "" %>">' +
-          '<% if (!elt.notitle) { %><label for="<%= node.id %>"><%= node.title ? node.title : node.name %></label><% } %>' +
+          '<% if (!elt.notitle) { %><label for="<%= node.id %>" class="form-label"><%= node.title ? node.title : node.name %></label><% } %>' +
           '<div class="controls"><%= tabs %></div>' +
         '</div>' +
         '<div class="tab-content">' +
@@ -1397,7 +1397,7 @@ jsonform.elementTypes = {
       data.value = activeChild.value;
 
       var elt = node.formElement;
-      var tabs = '<select class="nav form-control"' +
+      var tabs = '<select class="nav form-select"' +
         (node.disabled ? ' disabled' : '') +
         '>';
       _.each(children, function (child, idx) {
